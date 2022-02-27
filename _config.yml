@@ -6,7 +6,10 @@ url: "jongjinna.github.io" # the base hostname & protocol for your site
 
 # User settings
 username: Jongjin
-user_description: Hello, I`m Jongjin 여기에 내 자기소개를 엄청 길게 써 놓는 것이 좋겠어. 
+user_description: 안녕하세요. 나종진입니다. 성균관대학교 경영학과 재학 중입니다.
+            금융공부를 하고 있으며 현재 삼성증권에 근무하고 있습니다.
+            취미로 코딩을 하고 있습니다. DL, Quantum Computing 을 공부하고 있습니다. 
+            간단하게 포트폴리오를 기록하는 사이트입니다.
 user_title: Hello, I`m Jongjin
 email: njjwa1004@naver.com
 twitter_username: zh5ng__zhen
