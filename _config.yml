@@ -5,7 +5,7 @@ baseurl: "" # the subpath of your site, e.g. /blog
 url: "jongjinna.github.io" # the base hostname & protocol for your site e.g. http://willianjusten.com.br
 
 # User settings
-username: Jongjin Na
+username: Jongjin
 user_description: Hello, I`m Jongjin
 user_title: Hello, I`m Jongjin
 email: njjwa1004@naver.com
