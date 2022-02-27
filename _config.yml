@@ -1,6 +1,6 @@
 # Site settings
-title: A blog about jongjinna
-description: A blog about jongjinna
+title: Jongjin`s Blog
+description: A blog about jongjinna.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "jongjinna.github.io" # the base hostname & protocol for your site e.g. http://willianjusten.com.br
 
