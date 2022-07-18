@@ -194,3 +194,13 @@ ul > li:before {
   display: block;
   margin-bottom: 1.5rem;
 }
+
+.kakao {
+  display: none;
+}
+
+@media screen and (max-width: 960px) {
+  .kakao {
+    display: block;
+  }
+}
