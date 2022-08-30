@@ -1,0 +1,22 @@
+body {
+  background-color: gray;
+}
+
+h1 {
+  font-size: 4rem;
+  color: black;
+  text-align: center;
+  border-color: yellow;
+  background-color: yellow;
+}
+
+p {
+  font: 1.5rem sans-serif;
+  color: yellowgreen;
+}
+
+a {
+  font-size: 2rem;
+  color: #000;
+  text-decoration: none;
+}
