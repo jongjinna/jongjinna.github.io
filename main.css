@@ -1,0 +1,25 @@
+body {
+  font-family: 'Satisfy';
+}
+
+h1 {
+  text-align: center;
+}
+
+h3 {
+  text-align: center;
+}
+
+p {
+  text-align: center;
+}
+
+.siteurl {
+  text-align: center;
+}
+
+a {
+  font-size: 2rem;
+  color: #000;
+  text-decoration: none;
+}
