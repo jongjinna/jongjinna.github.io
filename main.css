@@ -1,13 +1,15 @@
 body {
   font-family: 'Satisfy';
-  background-color: #FCF7FC;
+  background-color: black;
 }
 
 h1 {
+  color: white;
   text-align: center;
 }
 
 h3 {
+  color: white;
   text-align: center;
 }
 
@@ -21,6 +23,6 @@ p {
 
 a {
   font-size: 2rem;
-  color: #000;
+  color: white;
   text-decoration: none;
 }
