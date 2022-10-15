@@ -9,46 +9,49 @@ div {
   text-align: center;
 }
 
-h1 {
-  font-size: 4rem;
+.TiTle_Up {
+  font-size: 3rem;
   color: white;
-  text-align: center;
+  margin: 1rem;
+  margin-top: 5rem;
 }
 
-img {
+.TiTle_Img {
   width: 30rem;
 }
 
-h3 {
+.TiTle_Down{
   font-size: 3rem;
   color: white;
   text-align: center;
+  margin: .5rem;
+  margin-bottom: 3rem;
 }
 
-p {
-  text-align: center;
-}
-
-a {
-  font-size: 2rem;
+.ConTact {
+  margin: 10rem;
   color: white;
+  text-align: center;
+  font-size: 2rem;
   text-decoration: none;
 }
 
 @media screen and (max-width: 900px) {
-  h1 {
+  .TiTle_Up {
     font-size: 2rem;
   }
 
-  h3 {
-    font-size: 1.5rem;
+  .TiTle_Down {
+    font-size: 1.8rem;
+    margin-bottom: 2rem;
   }
 
-  img {
+  .TiTle_Img {
     width: 90%;
   }
 
-  a {
-    font-size: 1rem;
+  .ConTact{
+    font-size: 1.2rem;
   }
+
 }
