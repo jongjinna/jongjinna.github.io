@@ -9,6 +9,11 @@ div {
   text-align: center;
 }
 
+a {
+  text-decoration: none;
+}
+
+/* index.html */
 .TiTle_Up {
   font-size: 3rem;
   color: white;
@@ -36,6 +41,35 @@ div {
   text-decoration: none;
 }
 
+/* contact.html */
+.Box {
+  display: grid;
+  width: 50%;
+  margin: auto;
+  text-align: center;
+  column-gap: 10px;
+  row-gap: 10px;
+  grid-template-columns: auto auto;
+}
+.Box-item-list {
+  border-radius: 6px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: white;
+}
+
+.repo {
+  font-size: 1.5rem;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+}
+.Info {
+  font-size: 1rem;
+  color: white;
+  text-align: center;
+}
+
 @media screen and (max-width: 900px) {
   .TiTle_Up {
     font-size: 2rem;
@@ -54,4 +88,7 @@ div {
     font-size: 1.2rem;
   }
 
+  .Box {
+    width: 80%;
+  }
 }
