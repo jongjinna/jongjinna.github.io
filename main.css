@@ -118,6 +118,14 @@ ul > li:before {
   color: #3a7bd5;
 }
 
+summary {
+  cursor: pointer;
+}
+
+details summary::marker {
+  font-size: 0;
+}
+
 .container {
   width: 100%;
   max-width: 50rem;
@@ -167,10 +175,13 @@ ul > li:before {
     padding-bottom: 1rem;
   }
   
-  /* img {
-    width: 0;
-    height: 0;
-  } */
+  img {
+    width: 100%;
+  }
+
+  .jongjin-pic {
+    width: 50%;
+  }
 }
 
 .other {
