@@ -1,5 +1,5 @@
 name: jongjin
-permalink: :year/:month/:day/:title
+permalink: :year:month:day/:title
 baseurl: /
 
 # Your blog's start year and this year, showed in the footer left

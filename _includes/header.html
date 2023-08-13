@@ -10,10 +10,10 @@
     </nav>
 
     {% if page.previous %}
-    <a id="oldPostBtn" class="btn nav-button" href="{{ site.baseurl }}{{ page.previous.url }}" title="上一篇"><i class="btn fa fa-3x fa-angle-left"></i></a>
+    <a id="oldPostBtn" class="btn nav-button" href="{{ site.baseurl }}{{ page.previous.url }}" title="previous"><i class="btn fa fa-3x fa-angle-left"></i></a>
     {% endif %}
 
     {% if page.next %}
-    <a id="nextPostBtn" class="btn nav-button" href="{{ site.baseurl }}{{ page.next.url }}" title="下一篇"><i class="btn fa fa-3x fa-angle-right"></i></a>
+    <a id="nextPostBtn" class="btn nav-button" href="{{ site.baseurl }}{{ page.next.url }}" title="next"><i class="btn fa fa-3x fa-angle-right"></i></a>
     {% endif %}
 </header>
