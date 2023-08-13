@@ -1,36 +1,27 @@
 <!DOCTYPE html>
+<html lang="{{ page.lang | default: site.lang | default: "en" }}">
 
-<html>
-<head>
-    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-    <link rel="stylesheet" href="{{ "/assets/css/main.css" | prepend: site.baseurl }}">
-    <link rel="stylesheet" href="{{ "/assets/css/font-awesome.min.css" | prepend: site.baseurl }}">
-    <title>{{ page.title}}</title>
-</head>
-<body>
-{% include header.html %}
-<div class="content">
-    <div class="paper paper-before" id="paperBefore"></div>
-    <div class="paper paper-article">
-        <!-- Date No. sign -->
-        <a href="#" title="date_no">
-        <span id="openBtn" class="date-index">
-            No.<span id="postIndex"></span><br>
-                <!--Date YYYY-MM-DD-->
-            {{ page.date | to_string | slice: 0, 10 }}
-        </span>
-        </a>
-        
-        <!--Calendar body-->
-        {% include calendar.html %}
-    
-        <!--Article body-->
-        <article class="typo">
-            {{ content }}
-        </article>
-    </div>        
-</div>
-{% include footer.html %}
-</body>
+  {%- include head.html -%}
+
+  <body>
+
+    {%- include views/header.html -%}
+
+    {%- include views/banner.html -%}
+
+    {%- include extensions/hashlocate.html -%}
+
+    {%- include extensions/theme-toggle.html -%}
+
+    {%- include extensions/click-to-top.html -%}
+
+    <main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        {{ content }}
+      </div>
+    </main>
+
+    {%- include views/footer.html -%}
+
+  </body>
 </html>
