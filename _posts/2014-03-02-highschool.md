@@ -1,12 +1,12 @@
 ---
 layout: post
-title: Birthday
-subtitle: It`s my birthdaty
+title: HighSchool
+subtitle: Seocheon High School
 categories: myInfo
-tags: [birth]
+tags: [School]
 ---
 
-내 생일이야
+고등학교는 서천고
 
 
 You can write regular [markdown](https://markdowntutorial.com/) here and Jekyll will automatically convert it to a nice webpage.  I strongly encourage you to [take 5 minutes to learn how to write in markdown](http://markdowntutorial.com/) - it'll teach you how to transform regular text into bold/italics/headings/tables/etc.
