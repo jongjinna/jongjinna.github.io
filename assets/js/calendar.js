@@ -96,16 +96,13 @@ function calInit() {
         },
 
         loadDate: function(first) {
-                // 根据任意日期，获取此月日历中第一个周一的日期
                 first.setDate(1);
                 var y = first.getFullYear();
                 var m = first.getMonth();
                 var w = first.getDay();
-                if(!w) w = 7; // 针对周日的 getDay() 值为0 的处理，将0转化为7
-                // first = new Date(y, m, 2-w); // 以周一为第一天
-                first = new Date(y, m, 1-w); // 以周日为第一天
+                if(!w) w = 7;
+                first = new Date(y, m, 1-w);
 
-                // 遍历获取所有日期
                 var arr = {};
                 for(var i = 0; i < 42; i++){
                     var date = first.getDate();
