@@ -1,203 +1,187 @@
----
-layout: page
-title: "Hitchens"
----
+<img width="1943" height="1093" alt="image" src="https://github.com/user-attachments/assets/cc2ff955-17c2-48c7-81c8-479a0f061850" />
 
-An inarguably well-designed [Jekyll](http://jekyllrb.com) theme by [Pat Dryburgh](https://patdryburgh.com).
+# DevPortfolio Template
 
-![Hitchens Preview](https://raw.githubusercontent.com/patdryburgh/hitchens/master/screenshot.png)
+A modern, minimalist portfolio template built with Astro and Tailwind CSS. Perfect for developers looking to showcase their skills, experience, and projects in a clean, professional way.
 
-Undoubtably one of the great minds of our time, [Christopher Hitchens](https://en.wikipedia.org/wiki/Christopher_Hitchens) challenged his readers to think deeply on topics of politics, religion, war, and science. This Jekyll theme's design is inspired by the trade paperback version his book, [Arguably](https://en.wikipedia.org/wiki/Arguably), and is dedicated to his memory.
+This was completely rebuilt from the ground up from V1. This template was built to be entirely ready to go with a quick config edit (see below) but also provides the ability to easily extend in whatever way you want.
 
-Not comfortable with Jekyll? This theme has also been ported to other platforms:
+This template also comes with `CLAUDE.md` and `.cursor/rules` files for easy integration with your existing AI workflows.
 
-- [Hitchens for Hugo](https://github.com/pimoore/microdotblog-hitchens) by Pete Moore (also available to be used on [Micro.blog](https://micro.blog))
-- [Hitchens for Eleventy](https://github.com/shellen/hitchens-eleventy) by Jason Shellen
+> **📬 Connect & Share!**  
+> For questions and updates, feel free to reach out on [**X (Twitter)**](https://x.com/rfitzio).  
+> If you've built and published your personal site with this template, I'd love to see it! Send me a DM 🚀
 
-**The following instructions pertain to Hitchens for Jekyll.**
+## Preview
 
-## Quick Start
+To view a live preview of the site, [click here](https://ryanfitzgerald.github.io/devportfolio/).
 
-This theme is, itself, a Jekyll blog, meaning the code base you see has everything you need to run a Jekyll powered blog!
+## Built With
 
-To get started quickly, follow the instructions below:
+- **[Astro](https://astro.build/)** - Static site generator for modern web apps
+- **[Tailwind CSS v4](https://tailwindcss.com/)** - Utility-first CSS framework
+- **[Tabler Icons](https://tabler.io/icons)** - Free and open source icons
+- **TypeScript** - For type-safe configuration
 
-1. Click the `Fork` button at the top of [the repository](https://github.com/patdryburgh/hitchens/);
-2. Go to your forked repo's `Settings` screen;
-3. Scroll down to the `GitHub Pages` section;
-4. Under `Source`, select the `Master` branch;
-5. Hit `Save`.
-6. Follow [Jekyll's instructions to configure your new Jekyll site](https://jekyllrb.com/docs/configuration/).
+## Updating the Template
 
-## Manual Installation
+### Configuration
 
-If you've already created your Jekyll site or are comfortable with the command line, you can follow [Jekyll's Quickstart instructions](https://jekyllrb.com/docs/) add this line to your Jekyll site's `Gemfile`:
+The template is designed to be easily customizable through the `src/config.ts` file. This single file controls:
 
-```ruby
-gem "hitchens-theme"
+- **Personal Information**: Name, title, description
+- **Accent Color**: Primary color theme (changing this will change the accent color site wide)
+- **Social Links**: Email, LinkedIn, Twitter, GitHub (all optional)
+- **About Section**: Personal bio/description
+- **Skills**: List of technical skills
+- **Projects**: Project showcase with descriptions and links
+- **Experience**: Work history with bullet points
+- **Education**: Educational background and achievements
+
+If skills, projects, experience, or education are removed from the config, those sections will be hidden entirely.
+
+### Example structures
+
+Here's what the config data structure looks like for each section:
+
+#### Basic Information
+```typescript
+name: "Your Name",
+title: "Your Job Title",
+description: "Brief site description",
+accentColor: "#1d4ed8", // Hex color for theme
 ```
 
-And add the following lines to your Jekyll site's `_config.yml`:
-
-```yaml
-theme: hitchens-theme
+#### Social Links (all optional)
+```typescript
+social: {
+  email: "your-email@example.com",
+  linkedin: "https://linkedin.com/in/yourprofile",
+  twitter: "https://twitter.com/yourprofile", 
+  github: "https://github.com/yourusername",
+}
 ```
 
-Depending on your [site's configuration](https://jekyllrb.com/docs/configuration/options/), you may also need to add:
-
-```yaml
-ignore_theme_config: true
+#### About Section
+```typescript
+aboutMe: "A paragraph describing yourself, your background, interests, and what you're passionate about. This appears in the About section of your portfolio."
 ```
 
-And then on the command line, execute:
-
-    $ bundle
-
-Or install the theme yourself as:
-
-    $ gem install hitchens-theme
-
-## Usage
-
-### Home Layout
-
-The `home` layout presents a list of articles ordered chronologically. The theme uses [Jekyll's built-in pagination](https://jekyllrb.com/docs/pagination/#enable-pagination) which can be configured in your `_config.yml` file.
-
-The masthead of the home page is derived from the `title` and `description` set in your site's `_config.yml` file.
-
-#### Navigation
-
-To include a navigation menu in your site's masthead and footer:
-
-1. Create a `_data` directory in the root of your site.
-2. Add a `menu.yml` file to the `_data` directory.
-3. Use the following format to list your menu items:
-
-```
-- title: About
-  url: /about.html
-
-- title: Source
-  url: https://github.com/patdryburgh/hitchens
+#### Skills
+```typescript
+skills: ["JavaScript", "React", "Node.js", "Python", "AWS", "Docker"]
 ```
 
-Be sure to start your `url`s with a `/`.
-
-#### Pagination
-
-To paginate your posts, add the following line to your site's `Gemfile`:
-
-```
-gem "jekyll-paginate"
-```
-
-Then, add the following lines to your site's `_config.yml` file:
-
-```
-plugins:
-  - jekyll-paginate
-
-paginate: 20
-paginate_path: "/page/:num/"
+#### Projects
+```typescript
+projects: [
+  {
+    name: "Project Name",
+    description: "Brief description of what the project does and its impact",
+    link: "https://github.com/yourusername/project",
+    skills: ["React", "Node.js", "AWS"], // Technologies used
+  }
+]
 ```
 
-You can set the `paginate` and `paginate_path` settings to whatever best suits you.
-
-#### Excerpts
-
-To show [excerpts](https://jekyllrb.com/docs/posts/#post-excerpts) of your blog posts on the home page, add the following settings to your site's `_config.yml` file:
-
-```
-show_excerpts: true
-```
-
-By default, excerpts that have more than 140 characters will be truncated to 20 words. In order to override the number of words you'd like to show for your excerpts, add the following setting to your site's `_config.yml` file:
-
-```
-excerpt_length: 20
-```
-
-To disable excerpt truncation entirely, simply set `excerpt_length` to `0` in your site's `_config.yml` file, like so:
-
-```
-excerpt_length: 0
+#### Experience
+```typescript
+experience: [
+  {
+    company: "Company Name",
+    title: "Your Job Title",
+    dateRange: "Jan 2022 - Present",
+    bullets: [
+      "Led development of microservices architecture serving 1M+ users",
+      "Reduced API response times by 40% through optimization",
+      "Mentored team of 5 junior developers",
+    ],
+  }
+]
 ```
 
-If you do this, the theme will still respect Jekyll's `excerpt_separator` feature as [described in the Jekyll documentation](https://jekyllrb.com/docs/posts/#post-excerpts).
-
-
-#### Title-less Posts
-
-If you want to publish posts that don't have a title, add the following setting to the [front matter](https://jekyllrb.com/docs/frontmatter/) of the post:
-
-```
-title: ""
-```
-
-When you do this, the home page will display a truncated [excerpt](https://jekyllrb.com/docs/posts/#post-excerpts) of the first paragraph of your post.
-
-Note that setting `excerpt_length` in your site's `_config.yml` file will set the length of _all_ excerpts, regardless of whether the post has a title or not. For posts with a title, the excerpt will appear under the title and slightly lighter. For title-less posts, the excerpt will appear as if it were a title.
-
-### Post Layout
-
-A sparsely decorated layout designed to present long-form writing in a manner that's pleasing to read.
-
-To use the post layout, add the following to your post's [front matter](https://jekyllrb.com/docs/frontmatter/):
-
-```
-layout: post
+#### Education
+```typescript
+education: [
+  {
+    school: "University Name",
+    degree: "Bachelor of Science in Computer Science",
+    dateRange: "2014 - 2018",
+    achievements: [
+      "Graduated Magna Cum Laude with 3.8 GPA",
+      "Dean's List all semesters",
+      "President of Computer Science Club"
+    ]
+  }
+]
 ```
 
 ### Icons
 
-The [JSON Feed spec](https://jsonfeed.org/version/1) states that feeds should include an icon. To add your icon, add the following line in your site's `_config.yml` file:
+The template uses [Tabler Icons](https://tabler.io/icons) for all icons. If you wish to add more icons and have it look consistent with what's already there, you can browse through their extensive icon library.
+
+## Project Structure
 
 ```
-feed_icon: /assets/images/icon-512.png
+devportfolio/
+├── public/
+│   └── favicon.svg          # Site favicon
+├── src/
+│   ├── components/          # Astro components
+│   │   ├── About.astro      # About section
+│   │   ├── Education.astro  # Education section
+│   │   ├── Experience.astro # Work experience section
+│   │   ├── Footer.astro     # Site footer
+│   │   ├── Header.astro     # Navigation header
+│   │   ├── Hero.astro       # Hero/intro section
+│   │   └── Projects.astro   # Projects showcase
+│   ├── pages/
+│   │   └── index.astro      # Main page layout
+│   ├── styles/
+│   │   └── global.css       # Global styles
+│   └── config.ts            # Site configuration
+├── astro.config.mjs         # Astro configuration
+├── package.json             # Project dependencies
+├── tailwind.config.js       # Tailwind configuration
+└── tsconfig.json            # TypeScript configuration
 ```
 
-Then, replace the `/assets/images/icon-512.png` file with your own image.
+## Local Development
 
-### Credits
-
-The theme credits that appear at the bottom of each page can be turned off by including the following line in your site's `_config.yml` file:
+If you'd like to run it locally:
 
 ```
-hide_credits: true
+git clone https://github.com/RyanFitzgerald/devportfolio.git
+cd devportfolio
+npm install
 ```
 
-### Search
-
-The theme uses a [custom DuckDuckGo Search Form](https://ddg.patdryburgh.com) that can be turned off by including the following line in your site's `_config.yml` file: 
+After that, start up the Astro dev server with:
 
 ```
-hide_search: true
+npm run dev
 ```
 
-### Font
+## Deployment
 
-I spent a good amount of time trying to identify the font used on the front cover of the trade paperback version of Arguably. Unfortunately, I failed to accurately identify the exact font used. If you happen to know what font is used on the book cover, I would appreciate you [letting me know](mailto:hello@patdryburgh.com) :)
+The template can be deployed to any static hosting service easily (and in most cases, completely free). Here are some options:
 
-The theme includes a version of [EB Garamond](https://fonts.google.com/specimen/EB+Garamond), designed by Georg Duffner and Octavio Pardo. It's the closest alternative I could come up with that included an open license to include with the theme.
+- To deploy with Netlify, [click here](https://docs.astro.build/en/guides/deploy/netlify/).
+- To deploy with Vercel, [click here](https://docs.astro.build/en/guides/deploy/vercel/).
+- To deploy with GitHub Pages, [click here](https://docs.astro.build/en/guides/deploy/github/).
+- To deploy with Cloudflare Pages, [click here](https://docs.astro.build/en/guides/deploy/cloudflare/).
+- To deploy with Render, [click here](https://docs.astro.build/en/guides/deploy/render/).
 
-A [copy of the license](https://github.com/patdryburgh/hitchens/blob/master/assets/fonts/OFL.txt) has been included in the `assets` folder and must be included with any distributions of this theme that include the EB Garamond font files.
+Want to deploy somewhere else? Find more guides [here](https://docs.astro.build/en/guides/deploy/).
 
-## Contributing & Requesting Features
+## Changelog
 
-Bug reports, feature requests, and pull requests are welcome on GitHub at [https://github.com/patdryburgh/hitchens](https://github.com/patdryburgh/hitchens).
-
-This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
-
-## Development
-
-To set up your environment to develop this theme, run `bundle install`.
-
-The theme is setup just like a normal Jekyll site. To test the theme, run `bundle exec jekyll serve` and open your browser at `http://localhost:4000`. This starts a Jekyll server using the theme. Add pages, documents, data, etc. like normal to test the theme's contents. As you make modifications to the theme and to your content, your site will regenerate and you should see the changes in the browser after a refresh, just like normal.
+To view the changelog, see CHANGELOG.md.
 
 ## License
 
-The code for this theme is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
+This project is fully and completely MIT. See LICENSE.md.
 
-The font, EB Garamond, is Copyright 2017 The EB Garamond Project Authors and licensed under the [SIL Open Font License Version 1.1](https://github.com/patdryburgh/hitchens/blob/master/assets/fonts/OFL.txt).
+## Questions?
 
-Graphics are released to the public domain.
+Feel free to reach out on [X (Twitter)](https://x.com/rfitzio) if you have any questions or need help.
