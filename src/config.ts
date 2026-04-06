@@ -13,27 +13,27 @@ export const siteConfig = {
     "I have been working in swap desk and execution at Samsung Securities for two years. Currently, I am responsible for handling inbound swaps, with a primary focus on middle-office operations.",
   skills: ["Swap", "Equity", "Excution", "Python", "ddd", "sss"],
   projects: [
-    {
-      name: "AI Dev Roundup Newsletter",
-      description:
-        "One concise email. Five minutes. Every Tuesday. Essential AI news & trends, production-ready libraries, powerful AI tools, and real-world code examples",
-      link: "https://aidevroundup.com/?ref=devportfolio",
-      skills: ["React", "Node.js", "AWS"],
-    },
-    {
-      name: "Chrome Extension Mastery: Build Full-Stack Extensions with React & Node.js",
-      description:
-        "Master the art of building production-ready, full-stack Chrome Extensions using modern web technologies and best practices",
-      link: "https://fullstackextensions.com/?ref=devportfolio",
-      skills: ["React", "Node.js", "AWS"],
-    },
-    {
-      name: "ExtensionKit",
-      description:
-        "Kit to jump-start your Chrome extension projects with a variety of battle-tested starter templates & examples",
-      link: "https://extensionkit.io/?ref=devportfolio",
-      skills: ["React", "Node.js", "AWS"],
-    },
+    // {
+    //   name: "AI Dev Roundup Newsletter",
+    //   description:
+    //     "One concise email. Five minutes. Every Tuesday. Essential AI news & trends, production-ready libraries, powerful AI tools, and real-world code examples",
+    //   link: "https://aidevroundup.com/?ref=devportfolio",
+    //   skills: ["React", "Node.js", "AWS"],
+    // },
+    // {
+    //   name: "Chrome Extension Mastery: Build Full-Stack Extensions with React & Node.js",
+    //   description:
+    //     "Master the art of building production-ready, full-stack Chrome Extensions using modern web technologies and best practices",
+    //   link: "https://fullstackextensions.com/?ref=devportfolio",
+    //   skills: ["React", "Node.js", "AWS"],
+    // },
+    // {
+    //   name: "ExtensionKit",
+    //   description:
+    //     "Kit to jump-start your Chrome extension projects with a variety of battle-tested starter templates & examples",
+    //   link: "https://extensionkit.io/?ref=devportfolio",
+    //   skills: ["React", "Node.js", "AWS"],
+    // },
   ],
   experience: [
     {
