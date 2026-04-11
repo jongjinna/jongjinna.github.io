@@ -1,6 +1,6 @@
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
-    siteUrl: 'https://umeshnagare.com',
+    siteUrl: 'https://jongjinna.github.io/',
     generateRobotsTxt: true,
     sitemapSize: 5000,
 };
