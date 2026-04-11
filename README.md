@@ -1,29 +1,103 @@
-# Personal Portfolio using Angular and Tailwind
+# 🍱 Bento-Style Personal Portfolio using Next.js
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.1.2.
+A cutting-edge, interactive personal portfolio built with **Next.js 16 (App Router)** and **TypeScript**. This project features a high-performance **Bento Grid** layout with drag-and-drop capabilities, integrated with modern CMS and backend services.
 
-![myportfolio](https://github.com/user-attachments/assets/e6f6197b-dd8c-48e9-b4f2-24c10f3b73c5)
+## ✨ Key Features
 
-## Development server
+- **Interactive Bento Grid**: A fully draggable and reorderable layout using **@dnd-kit**.
+- **Dynamic Content**: Blogs and articles powered by **Contentful CMS**.
+- **Backend Power**: Testimonies and form submissions handled by **Supabase**.
+- **Modern Styling**: Styled with a mix of **Styled-components** and **Tailwind CSS**.
+- **Interactive Maps**: Geographic location data displayed using **Leaflet**.
+- **Theme Support**: Seamless Dark and Light mode transitions.
+- **Micro-interactions**: Smooth page transitions and hover effects for a premium feel.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+---
 
-## Code scaffolding
+## 🛠️ Tech Stack
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+### Frontend
+- **Framework**: Next.js 16 (App Router)
+- **Language**: TypeScript
+- **Styling**: Styled-components, Tailwind CSS (v4)
+- **Icons**: React Icons
 
-## Build
+### Animation & Interaction
+- **Drag & Drop**: `@dnd-kit/core`, `@dnd-kit/sortable`
+- **Transitions**: Native CSS & Custom Page Transitions
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+### Services & API
+- **CMS**: Contentful
+- **Backend/Database**: Supabase
+- **Maps**: Leaflet & React-Leaflet
+- **Email**: Nodemailer
 
-## Running unit tests
+---
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## 🏗️ Implementation Details
 
-## Running end-to-end tests
+### Interactive Grid
+The core of the portfolio is the **Bento Grid** located in `src/app/home/page.tsx`. It utilizes the `@dnd-kit` library to create a sortable layout of individual tiles. Each tile is a standalone component, allowing for a modular and maintainable structure.
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+### Service Integrations
+- **Supabase**: Used for fetching and submitting user testimonials. See `src/app/lib/supabase` for client configuration.
+- **Contentful**: Manages blog post content, providing a headless CMS experience.
+- **Leaflet**: Provides interactive map views for showcasing geographic interests or locations.
+- **Nodemailer**: Configured to process contact form submissions directly from the portfolio.
 
-## Further help
+---
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## 🚀 Getting Started
+
+### Prerequisites
+- Node.js (v18 or higher recommended)
+- npm or yarn
+
+### Installation
+
+```bash
+git clone <your-repo-url>
+cd angular-next
+npm install
+```
+
+### Environment Variables
+
+Create a `.env.local` file in the root directory and add the following keys:
+
+```env
+# Supabase
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+
+# Contentful
+CONTENTFUL_SPACE_ID=your_space_id
+CONTENTFUL_ACCESS_TOKEN=your_access_token
+
+# Nodemailer
+EMAIL_SERVER_USER=your_email
+EMAIL_SERVER_PASSWORD=your_password
+```
+
+### Running the App
+
+```bash
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) to see your portfolio in action.
+
+---
+
+## 📁 Folder Structure
+
+- `src/app`: Application routes and pages (Next.js App Router).
+- `src/app/components`: Reusable UI components and grid tiles.
+- `src/app/lib`: Service client initializations (Supabase, Contentful).
+- `public`: Static assets (images, icons).
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
