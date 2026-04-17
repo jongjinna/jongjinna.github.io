@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>Pyodide matplotlib Demo</title>
+</head>
+<body>
+
+<h2>📊 Python matplotlib 그래프 (브라우저 실행)</h2>
+
+<button onclick="draw()">그래프 그리기</button>
+
+<br><br>
+<img id="plot" />
+
+<script src="https://cdn.jsdelivr.net/pyodide/v0.25.0/full/pyodide.js"></script>
+
+<script>
+let pyodideReady = loadPyodide();
+
+async function draw() {
+  const pyodide = await pyodideReady;
+
+  // matplotlib 설치
+  await pyodide.loadPackage(["numpy", "matplotlib"]);
+
+  let code = `
+import matplotlib.pyplot as plt
+import numpy as np
+import io, base64
+
+x = np.linspace(0, 10, 100)
+y = np.sin(x)
+
+plt.figure()
+plt.plot(x, y)
+plt.title("Sine Wave")
+
+buf = io.BytesIO()
+plt.savefig(buf, format="png")
+buf.seek(0)
+
+img = base64.b64encode(buf.read()).decode("utf-8")
+img
+  `;
+
+  let base64img = pyodide.runPython(code);
+
+  document.getElementById("plot").src =
+    "data:image/png;base64," + base64img;
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>투자 전략 · MS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0a0a0a;
+      --bg2: #111111;
+      --bg3: #181818;
+      --surface: #1c1c1c;
+      --green: #4ade80;
+      --green-dim: #1a3d28;
+      --white: #f5f5f0;
+      --gray: #888;
+      --gray2: #555;
+      --border: rgba(255,255,255,0.07);
+      --border2: rgba(255,255,255,0.13);
+      --red: #f87171;
+      --blue: #60a5fa;
+      --font-display: 'Syne', sans-serif;
+      --font-serif: 'DM Serif Display', serif;
+      --font-body: 'DM Sans', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--white); font-family: var(--font-body); min-height: 100vh; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 0 2.5rem; height: 64px;
+      display: flex; align-items: center; justify-content: space-between;
+      background: rgba(10,10,10,0.9); backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo { display: flex; align-items: center; gap: 1rem; text-decoration: none; }
+    .nav-logo .ms { font-family: var(--font-display); font-weight: 800; font-size: 1.1rem; color: var(--white); }
+    .nav-sep { width: 1px; height: 32px; background: var(--border2); }
+    .nav-tagline { display: flex; flex-direction: column; gap: 2px; }
+    .nav-tagline span:first-child { font-size: 0.58rem; letter-spacing: 0.14em; color: var(--gray); text-transform: uppercase; }
+    .nav-tagline span:last-child  { font-size: 0.58rem; letter-spacing: 0.14em; color: var(--green); font-weight: 600; text-transform: uppercase; }
+    .nav-links { display: flex; align-items: center; gap: 0.2rem; list-style: none; }
+    .nav-links a {
+      font-family: var(--font-display); font-size: 0.82rem; font-weight: 600;
+      color: var(--gray); text-decoration: none;
+      padding: 0.4rem 1rem; border-radius: 999px; border: 1px solid transparent;
+      transition: all 0.2s;
+    }
+    .nav-links a:hover { color: var(--white); }
+    .nav-links a.active { color: var(--bg); background: var(--white); border-color: var(--white); }
+    .nav-actions { display: flex; align-items: center; gap: 0.6rem; }
+    .nav-icon {
+      width: 36px; height: 36px; border-radius: 50%;
+      border: 1px solid var(--border2); background: transparent; color: var(--gray);
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      font-size: 0.9rem; transition: all 0.2s;
+    }
+    .nav-icon:hover { color: var(--white); background: var(--surface); }
+    .nav-cta {
+      font-family: var(--font-display); font-size: 0.82rem; font-weight: 700;
+      padding: 0.5rem 1.25rem; border-radius: 999px; border: none;
+      background: var(--white); color: var(--bg); cursor: pointer; transition: all 0.2s;
+    }
+    .nav-cta:hover { background: var(--green); }
+
+    /* ── PAGE ── */
+    .page { max-width: 1000px; margin: 0 auto; padding: 7rem 2.5rem 6rem; }
+
+    .page-eyebrow {
+      font-family: var(--font-display); font-size: 0.68rem; font-weight: 700;
+      letter-spacing: 0.18em; color: var(--green); text-transform: uppercase;
+      display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;
+    }
+    .page-eyebrow::before { content:''; display:block; width:14px; height:1px; background:var(--green); }
+    .page-title {
+      font-family: var(--font-display); font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 800; line-height: 1.1; letter-spacing: -0.03em;
+      color: var(--white); margin-bottom: 0.75rem;
+    }
+    .page-sub { font-size: 0.95rem; color: var(--gray); line-height: 1.7; margin-bottom: 3rem; }
+
+    /* ── STEP LAYOUT ── */
+    .steps { display: flex; flex-direction: column; gap: 2rem; }
+
+    .step-card {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 20px; overflow: hidden;
+      transition: border-color 0.2s;
+    }
+    .step-card.active { border-color: var(--border2); }
+
+    .step-header {
+      display: flex; align-items: center; gap: 1rem;
+      padding: 1.5rem 2rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .step-num {
+      width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;
+      background: var(--surface); border: 1px solid var(--border2);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-display); font-size: 0.7rem; font-weight: 800;
+      color: var(--gray2);
+    }
+    .step-card.active .step-num { background: var(--green-dim); border-color: rgba(74,222,128,0.3); color: var(--green); }
+    .step-card.done .step-num { background: var(--green-dim); border-color: rgba(74,222,128,0.3); color: var(--green); }
+    .step-card.done .step-num::after { content: '✓'; }
+    .step-title { font-family: var(--font-display); font-size: 0.95rem; font-weight: 700; color: var(--white); }
+    .step-desc { font-size: 0.78rem; color: var(--gray); margin-top: 1px; }
+
+    .step-body { padding: 1.75rem 2rem; }
+
+    /* ── STEP 1: Strategy ── */
+    .strategy-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.75rem; }
+
+    .strategy-card {
+      background: var(--bg3); border: 1px solid var(--border);
+      border-radius: 14px; padding: 1.25rem 1rem;
+      cursor: pointer; transition: all 0.2s; text-align: left;
+    }
+    .strategy-card:hover { border-color: var(--border2); background: var(--surface); }
+    .strategy-card.selected { border-color: var(--green); background: var(--green-dim); }
+
+    .s-letter {
+      font-family: var(--font-display); font-size: 2rem; font-weight: 800;
+      color: var(--gray2); line-height: 1; margin-bottom: 0.75rem;
+      transition: color 0.2s;
+    }
+    .strategy-card.selected .s-letter { color: var(--green); }
+    .s-name { font-family: var(--font-display); font-size: 0.85rem; font-weight: 700; color: var(--white); margin-bottom: 0.4rem; }
+    .s-desc { font-size: 0.72rem; color: var(--gray); line-height: 1.55; }
+
+    /* ── STEP 2: Stocks ── */
+    .stocks-label {
+      font-family: var(--font-display); font-size: 0.68rem; font-weight: 700;
+      letter-spacing: 0.12em; color: var(--gray2); text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+    .stocks-grid { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+
+    .stock-chip {
+      font-family: var(--font-display); font-size: 0.8rem; font-weight: 600;
+      padding: 0.45rem 1rem; border-radius: 999px;
+      border: 1px solid var(--border2); background: var(--bg3);
+      color: var(--gray); cursor: pointer; transition: all 0.2s;
+      user-select: none;
+    }
+    .stock-chip:hover { color: var(--white); border-color: rgba(255,255,255,0.25); }
+    .stock-chip.selected { background: var(--green-dim); border-color: rgba(74,222,128,0.4); color: var(--green); }
+
+    .stock-hint { font-size: 0.75rem; color: var(--gray2); margin-top: 0.85rem; }
+
+    /* ── RUN BUTTON ── */
+    .run-wrap { display: flex; justify-content: flex-end; margin-top: 1.5rem; }
+    .run-btn {
+      font-family: var(--font-display); font-size: 0.85rem; font-weight: 700;
+      padding: 0.75rem 2rem; border-radius: 999px; border: none;
+      background: var(--green); color: var(--bg); cursor: pointer;
+      transition: all 0.2s; display: flex; align-items: center; gap: 0.5rem;
+    }
+    .run-btn:hover { background: #6ef09e; }
+    .run-btn:disabled { background: var(--gray2); color: var(--bg); cursor: not-allowed; opacity: 0.6; }
+    .run-btn .spinner {
+      width: 14px; height: 14px; border-radius: 50%;
+      border: 2px solid rgba(0,0,0,0.3); border-top-color: var(--bg);
+      animation: spin 0.7s linear infinite; display: none;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── RESULT ── */
+    #resultSection { display: none; }
+
+    .result-eyebrow {
+      font-family: var(--font-display); font-size: 0.68rem; font-weight: 700;
+      letter-spacing: 0.18em; color: var(--green); text-transform: uppercase;
+      display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.25rem;
+    }
+    .result-eyebrow::before { content:''; display:block; width:14px; height:1px; background:var(--green); }
+
+    /* Stats row */
+    .stats-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.75rem; margin-bottom: 1.5rem; }
+
+    .stat-card {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 14px; padding: 1.25rem 1rem; text-align: center;
+    }
+    .stat-label { font-family: var(--font-display); font-size: 0.6rem; font-weight: 700; letter-spacing: 0.12em; color: var(--gray2); text-transform: uppercase; margin-bottom: 0.5rem; }
+    .stat-value { font-family: var(--font-display); font-size: 1.45rem; font-weight: 800; color: var(--white); line-height: 1; }
+    .stat-value.pos { color: var(--green); }
+    .stat-value.neg { color: var(--red); }
+    .stat-unit { font-size: 0.62rem; color: var(--gray2); margin-top: 0.3rem; }
+
+    /* Risk badge */
+    .risk-low    { color: var(--green); }
+    .risk-mid    { color: #fbbf24; }
+    .risk-high   { color: var(--red); }
+
+    /* Summary */
+    .summary-box {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-left: 3px solid var(--green);
+      border-radius: 0 12px 12px 0;
+      padding: 1.25rem 1.5rem; margin-bottom: 1.5rem;
+      font-size: 0.92rem; color: var(--gray); line-height: 1.75;
+    }
+
+    /* Chart */
+    .chart-card {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 16px; padding: 1.75rem;
+    }
+    .chart-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; }
+    .chart-title { font-family: var(--font-display); font-size: 0.9rem; font-weight: 700; color: var(--white); }
+    .chart-legend { display: flex; align-items: center; gap: 1.25rem; }
+    .legend-item { display: flex; align-items: center; gap: 0.4rem; font-size: 0.72rem; color: var(--gray); }
+    .legend-dot { width: 8px; height: 8px; border-radius: 50%; }
+    .chart-wrap { position: relative; height: 280px; }
+
+    /* footer */
+    footer { border-top: 1px solid var(--border); padding: 2.5rem; display: flex; align-items: center; justify-content: space-between; }
+    .f-logo { font-family: var(--font-display); font-size: 0.75rem; font-weight: 700; color: var(--gray2); }
+    .f-logo span { color: var(--green); }
+    .f-copy { font-size: 0.72rem; color: var(--gray2); }
+    .f-links { display: flex; gap: 1.5rem; }
+    .f-links a { font-size: 0.72rem; color: var(--gray2); text-decoration: none; transition: color 0.2s; }
+    .f-links a:hover { color: var(--white); }
+
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-thumb { background: #333; border-radius: 999px; }
+
+    @media(max-width:768px) {
+      .strategy-grid { grid-template-columns: 1fr 1fr; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .page { padding: 6rem 1.25rem 4rem; }
+    }
+    @media(max-width:480px) {
+      .strategy-grid { grid-template-columns: 1fr 1fr; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <span class="ms">MS</span>
+    <span class="nav-sep"></span>
+    <span class="nav-tagline">
+      <span>Creative Engineer</span>
+      <span>Building the Future</span>
+    </span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#">Home</a></li>
+    <li><a href="#">About</a></li>
+    <li><a href="#">Work</a></li>
+    <li><a href="#" class="active">전략</a></li>
+    <li><a href="#">More ▾</a></li>
+  </ul>
+  <div class="nav-actions">
+    <button class="nav-icon">⌘</button>
+    <button class="nav-icon">☽</button>
+    <button class="nav-cta">Book a Call</button>
+  </div>
+</nav>
+
+<!-- PAGE -->
+<main class="page">
+
+  <p class="page-eyebrow">Investment Strategy</p>
+  <h1 class="page-title">투자 전략 시뮬레이터</h1>
+  <p class="page-sub">전략을 선택하고 종목을 골라 실행하면 수익률과 위험도 분석 결과를 확인할 수 있습니다.</p>
+
+  <div class="steps">
+
+    <!-- STEP 1 -->
+    <div class="step-card active" id="step1Card">
+      <div class="step-header">
+        <div class="step-num" id="step1Num">1</div>
+        <div>
+          <p class="step-title">전략 선택</p>
+          <p class="step-desc">운용할 투자 전략을 하나 선택하세요</p>
+        </div>
+      </div>
+      <div class="step-body">
+        <div class="strategy-grid" id="strategyGrid">
+          <!-- JS로 렌더링 -->
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 2 -->
+    <div class="step-card" id="step2Card">
+      <div class="step-header">
+        <div class="step-num" id="step2Num">2</div>
+        <div>
+          <p class="step-title">종목 선택</p>
+          <p class="step-desc" id="step2Desc">전략을 먼저 선택하면 종목 목록이 표시됩니다</p>
+        </div>
+      </div>
+      <div class="step-body">
+        <p class="stocks-label" id="stocksLabel" style="display:none">종목 선택 (복수 선택 가능)</p>
+        <div class="stocks-grid" id="stocksGrid">
+          <p style="font-size:0.82rem; color:var(--gray2);">← 전략을 먼저 선택해주세요</p>
+        </div>
+        <p class="stock-hint" id="stockHint" style="display:none"></p>
+
+        <div class="run-wrap">
+          <button class="run-btn" id="runBtn" onclick="runStrategy()" disabled>
+            <div class="spinner" id="spinner"></div>
+            <span id="runBtnText">전략 실행 →</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 3: RESULT -->
+    <div class="step-card" id="resultSection">
+      <div class="step-header">
+        <div class="step-num" id="step3Num">3</div>
+        <div>
+          <p class="step-title">분석 결과</p>
+          <p class="step-desc" id="resultStrategyName">—</p>
+        </div>
+      </div>
+      <div class="step-body">
+
+        <p class="result-eyebrow">Performance Metrics</p>
+
+        <!-- Stats -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <p class="stat-label">총 수익률</p>
+            <p class="stat-value" id="statReturn">—</p>
+            <p class="stat-unit">1년 누적</p>
+          </div>
+          <div class="stat-card">
+            <p class="stat-label">연환산 수익률</p>
+            <p class="stat-value" id="statAnnual">—</p>
+            <p class="stat-unit">CAGR</p>
+          </div>
+          <div class="stat-card">
+            <p class="stat-label">최대 낙폭</p>
+            <p class="stat-value neg" id="statMDD">—</p>
+            <p class="stat-unit">MDD</p>
+          </div>
+          <div class="stat-card">
+            <p class="stat-label">샤프 비율</p>
+            <p class="stat-value" id="statSharpe">—</p>
+            <p class="stat-unit">Sharpe Ratio</p>
+          </div>
+          <div class="stat-card">
+            <p class="stat-label">위험도</p>
+            <p class="stat-value" id="statRisk" style="font-size:1.1rem;">—</p>
+            <p class="stat-unit" id="statVol">변동성 —%</p>
+          </div>
+        </div>
+
+        <!-- Summary -->
+        <div class="summary-box" id="summaryBox">—</div>
+
+        <!-- Chart -->
+        <div class="chart-card">
+          <div class="chart-header">
+            <p class="chart-title">누적 수익률 추이</p>
+            <div class="chart-legend">
+              <div class="legend-item">
+                <div class="legend-dot" style="background:var(--green)"></div>
+                <span>포트폴리오</span>
+              </div>
+              <div class="legend-item">
+                <div class="legend-dot" style="background:var(--gray2)"></div>
+                <span>벤치마크 (KOSPI)</span>
+              </div>
+            </div>
+          </div>
+          <div class="chart-wrap">
+            <canvas id="returnChart"></canvas>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<footer>
+  <span class="f-logo">MS · <span>Finance & Tech</span></span>
+  <span class="f-copy">© 2026 MS</span>
+  <div class="f-links">
+    <a href="#">GitHub</a>
+    <a href="#">Blog</a>
+    <a href="#">LinkedIn</a>
+  </div>
+</footer>
+
+<script>
+  // ── 설정 ────────────────────────────────────────────────────
+  const API = "http://localhost:8000";   // FastAPI 서버 주소
+
+  let strategies = {};
+  let selectedStrategy = null;
+  let selectedStocks   = new Set();
+  let chartInstance    = null;
+
+  // ── 초기화: 전략 목록 로드 ──────────────────────────────────
+  async function init() {
+    try {
+      const res  = await fetch(`${API}/strategies`);
+      strategies = await res.json();
+    } catch {
+      // 서버 연결 실패 시 로컬 더미 데이터 사용
+      strategies = {
+        A: { name: "모멘텀 전략",    description: "최근 12개월 수익률 상위 종목 집중 투자", stocks: ["삼성전자","SK하이닉스","LG에너지솔루션","NAVER","카카오"] },
+        B: { name: "저변동성 전략",  description: "변동성이 낮은 안정적 종목 위주 포트폴리오", stocks: ["삼성전자","현대차","POSCO홀딩스","KT&G","삼성생명"] },
+        C: { name: "배당 전략",      description: "배당수익률 상위 종목으로 안정적 현금흐름 확보", stocks: ["KT&G","삼성생명","하나금융지주","KB금융","신한지주"] },
+        D: { name: "퀄리티 전략",    description: "ROE·영업이익률 등 펀더멘털 우수 종목 선별", stocks: ["삼성전자","LG화학","셀트리온","현대모비스","SK텔레콤"] },
+      };
+    }
+    renderStrategies();
+  }
+
+  // ── 전략 카드 렌더 ───────────────────────────────────────────
+  function renderStrategies() {
+    const grid = document.getElementById("strategyGrid");
+    grid.innerHTML = Object.entries(strategies).map(([key, s]) => `
+      <div class="strategy-card" data-key="${key}" onclick="selectStrategy('${key}')">
+        <p class="s-letter">${key}</p>
+        <p class="s-name">${s.name}</p>
+        <p class="s-desc">${s.description}</p>
+      </div>
+    `).join("");
+  }
+
+  // ── 전략 선택 ────────────────────────────────────────────────
+  function selectStrategy(key) {
+    selectedStrategy = key;
+    selectedStocks.clear();
+
+    document.querySelectorAll(".strategy-card").forEach(c => {
+      c.classList.toggle("selected", c.dataset.key === key);
+    });
+
+    document.getElementById("step1Card").classList.add("done");
+    document.getElementById("step2Card").classList.add("active");
+    document.getElementById("step2Desc").textContent = `${strategies[key].name}의 편입 종목을 선택하세요`;
+
+    renderStocks(strategies[key].stocks);
+    document.getElementById("step1Num").textContent = "✓";
+  }
+
+  // ── 종목 렌더 ────────────────────────────────────────────────
+  function renderStocks(stocks) {
+    document.getElementById("stocksLabel").style.display = "block";
+    document.getElementById("stockHint").style.display   = "block";
+
+    const grid = document.getElementById("stocksGrid");
+    grid.innerHTML = stocks.map(s => `
+      <div class="stock-chip" data-stock="${s}" onclick="toggleStock('${s}')">
+        ${s}
+      </div>
+    `).join("");
+    updateRunBtn();
+  }
+
+  // ── 종목 선택 토글 ───────────────────────────────────────────
+  function toggleStock(name) {
+    selectedStocks.has(name) ? selectedStocks.delete(name) : selectedStocks.add(name);
+    document.querySelectorAll(".stock-chip").forEach(c => {
+      c.classList.toggle("selected", selectedStocks.has(c.dataset.stock));
+    });
+    updateRunBtn();
+  }
+
+  function updateRunBtn() {
+    const n   = selectedStocks.size;
+    const btn = document.getElementById("runBtn");
+    btn.disabled = n === 0;
+    document.getElementById("stockHint").textContent =
+      n === 0 ? "1개 이상 선택해주세요" : `${n}개 종목 선택됨`;
+  }
+
+  // ── 전략 실행 ────────────────────────────────────────────────
+  async function runStrategy() {
+    const btn     = document.getElementById("runBtn");
+    const spinner = document.getElementById("spinner");
+    const btnText = document.getElementById("runBtnText");
+
+    btn.disabled      = true;
+    spinner.style.display = "block";
+    btnText.textContent   = "분석 중...";
+
+    try {
+      const res = await fetch(`${API}/run`, {
+        method:  "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          strategy:        selectedStrategy,
+          selected_stocks: [...selectedStocks],
+        }),
+      });
+      const data = await res.json();
+      renderResult(data);
+    } catch {
+      // 서버 없을 때 더미 결과 렌더
+      renderResult(makeDummyResult());
+    } finally {
+      btn.disabled          = false;
+      spinner.style.display = "none";
+      btnText.textContent   = "다시 실행 →";
+    }
+  }
+
+  // ── 결과 렌더 ────────────────────────────────────────────────
+  function renderResult(data) {
+    const sec = document.getElementById("resultSection");
+    sec.style.display = "block";
+    sec.classList.add("active");
+    document.getElementById("step2Num").textContent = "✓";
+
+    document.getElementById("resultStrategyName").textContent = data.strategy_name;
+    document.getElementById("summaryBox").textContent         = data.summary;
+
+    const ret = data.total_return;
+    const retEl = document.getElementById("statReturn");
+    retEl.textContent  = (ret >= 0 ? "+" : "") + ret.toFixed(1) + "%";
+    retEl.className    = "stat-value " + (ret >= 0 ? "pos" : "neg");
+
+    const ann = data.annual_return;
+    const annEl = document.getElementById("statAnnual");
+    annEl.textContent = (ann >= 0 ? "+" : "") + ann.toFixed(1) + "%";
+    annEl.className   = "stat-value " + (ann >= 0 ? "pos" : "neg");
+
+    document.getElementById("statMDD").textContent    = data.max_drawdown.toFixed(1) + "%";
+    document.getElementById("statSharpe").textContent = data.sharpe_ratio.toFixed(2);
+
+    const riskEl = document.getElementById("statRisk");
+    riskEl.textContent  = data.risk_level;
+    riskEl.className    = "stat-value " + (data.risk_level === "낮음" ? "risk-low" : data.risk_level === "보통" ? "risk-mid" : "risk-high");
+    document.getElementById("statVol").textContent = `변동성 ${data.volatility.toFixed(1)}%`;
+
+    renderChart(data.chart_data);
+
+    sec.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  // ── 차트 렌더 ────────────────────────────────────────────────
+  function renderChart(chartData) {
+    const labels    = chartData.map(d => d.date);
+    const portfolio = chartData.map(d => d.portfolio);
+    const benchmark = chartData.map(d => d.benchmark);
+
+    // 날짜 레이블 간소화 (월별만)
+    const tickLabels = labels.map((l, i) => {
+      if (i === 0 || l.slice(8) === "01") return l.slice(0, 7);
+      return "";
+    });
+
+    if (chartInstance) chartInstance.destroy();
+
+    const ctx = document.getElementById("returnChart").getContext("2d");
+    chartInstance = new Chart(ctx, {
+      type: "line",
+      data: {
+        labels: tickLabels,
+        datasets: [
+          {
+            label: "포트폴리오",
+            data: portfolio,
+            borderColor: "#4ade80",
+            borderWidth: 2,
+            pointRadius: 0,
+            tension: 0.3,
+            fill: true,
+            backgroundColor: "rgba(74,222,128,0.05)",
+          },
+          {
+            label: "벤치마크",
+            data: benchmark,
+            borderColor: "#555",
+            borderWidth: 1.5,
+            pointRadius: 0,
+            tension: 0.3,
+            fill: false,
+            borderDash: [4, 4],
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        interaction: { mode: "index", intersect: false },
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            backgroundColor: "#1c1c1c",
+            borderColor: "rgba(255,255,255,0.1)",
+            borderWidth: 1,
+            titleColor: "#888",
+            bodyColor: "#f5f5f0",
+            callbacks: {
+              label: ctx => ` ${ctx.dataset.label}: ${ctx.parsed.y.toFixed(2)}`,
+            },
+          },
+        },
+        scales: {
+          x: {
+            grid: { color: "rgba(255,255,255,0.04)" },
+            ticks: { color: "#555", font: { family: "DM Sans", size: 11 }, maxRotation: 0 },
+          },
+          y: {
+            grid: { color: "rgba(255,255,255,0.04)" },
+            ticks: {
+              color: "#555", font: { family: "DM Sans", size: 11 },
+              callback: v => v.toFixed(0),
+            },
+          },
+        },
+      },
+    });
+  }
+
+  // ── 더미 결과 (서버 없을 때) ────────────────────────────────
+  function makeDummyResult() {
+    const s      = strategies[selectedStrategy];
+    const n      = 252;
+    const dates  = Array.from({ length: n }, (_, i) => {
+      const d = new Date(); d.setDate(d.getDate() - (n - i));
+      return d.toISOString().slice(0, 10);
+    });
+    let p = 100, b = 100;
+    const chartData = dates.map(date => {
+      p *= (1 + (Math.random() * 0.03 - 0.01));
+      b *= (1 + (Math.random() * 0.02 - 0.008));
+      return { date, portfolio: +p.toFixed(2), benchmark: +b.toFixed(2) };
+    });
+    const ret = +(chartData.at(-1).portfolio - 100).toFixed(2);
+    const vol = +(10 + Math.random() * 12).toFixed(2);
+    const mdd = +(-5 - Math.random() * 15).toFixed(2);
+    const risk = vol < 12 ? "낮음" : vol < 20 ? "보통" : "높음";
+    return {
+      strategy_name: s.name,
+      total_return:  ret,
+      annual_return: ret,
+      max_drawdown:  mdd,
+      sharpe_ratio:  +(ret / vol).toFixed(2),
+      volatility:    vol,
+      risk_level:    risk,
+      summary: `${s.name}으로 ${selectedStocks.size}개 종목을 선택한 포트폴리오는 1년간 ${ret > 0 ? "+" : ""}${ret}%의 수익률을 기록했습니다. 변동성은 ${vol}%로 위험도는 '${risk}' 수준이며, 최대 낙폭은 ${mdd}%입니다.`,
+      chart_data: chartData,
+    };
+  }
+
+  init();
+</script>
+</body>
+</html>
